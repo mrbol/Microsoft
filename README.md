@@ -6,8 +6,10 @@ Estudo Core https://docs.microsoft.com/pt-br/users/waldineyromero-0874/collectio
 
 ### Guia de estudo - Desenvolver aplicativos ASP.NET Core
 - [x] Aplicativos API Web RESTful  
-  -  tutorial : https://docs.microsoft.com/pt-br/aspnet/core/tutorials/first-web-api?view=aspnetcore-5.0&tabs=visual-studio   
-  -  repostiorio : https://github.com/mrbol/Microsoft/tree/master/TodoApi
+  -  tutorial 
+      -  https://docs.microsoft.com/pt-br/aspnet/core/tutorials/first-web-api?view=aspnetcore-5.0&tabs=visual-studio   
+  -  repostiorio 
+      -  https://github.com/mrbol/Microsoft/tree/master/TodoApi
 - [ ] Interface do usuário da Web focada em páginas com o Razor Pages
   - https://docs.microsoft.com/pt-br/aspnet/core/tutorials/razor-pages/razor-pages-start?view=aspnetcore-5.0&tabs=visual-studio 
 - [ ] Interface do usuário da Web focada em páginas com MVC
