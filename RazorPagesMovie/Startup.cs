@@ -9,59 +9,62 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using RazorPagesMovie.Data;
 
 namespace RazorPagesMovie
 {
-  public class Startup
-{
-    public Startup(IConfiguration configuration, IWebHostEnvironment env)
+    public class Startup
     {
-        Environment = env;
-        Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-    public IWebHostEnvironment Environment { get; }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-        if (Environment.IsDevelopment())
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
+            Environment = env;
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddRazorPages();
+
             services.AddDbContext<RazorPagesMovieContext>(options =>
-            options.UseSqlite(
-                Configuration.GetConnectionString("RazorPagesMovieContext")));
+                options.UseSqlite(Configuration.GetConnectionString("RazorPagesMovieContext")));
         }
-        else
+
+        public void Configure(IApplicationBuilder app)
         {
-            services.AddDbContext<RazorPagesMovieContext>(options =>
-            options.UseSqlServer(
-                Configuration.GetConnectionString("MovieContext")));
-        }
+            var supportedCultures = new[] { new CultureInfo("pt-BR") };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(culture: "pt-BR", uiCulture: "pt-BR"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
-        services.AddRazorPages();
-    }
+            if (Environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
 
-    public void Configure(IApplicationBuilder app)
-    {
-        if (Environment.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-        }
-        else
-        {
-            app.UseExceptionHandler("/Error");
-            app.UseHsts();
-        }
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
-        app.UseHttpsRedirection();
-        app.UseStaticFiles();
+            app.UseRouting();
 
-        app.UseRouting();
 
-        app.UseEndpoints(endpoints =>
+
+            app.UseEndpoints(endpoints =>
         {
             endpoints.MapRazorPages();
         });
+        }
     }
-}
 }
